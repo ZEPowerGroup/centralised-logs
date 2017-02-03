@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+ name: kibana
+ annotations:
+  kubernetes.io/tls-acme: "true"
+  kubernetes.io/ingress.class: "gce"
+spec:
+ tls:
+ - hosts:
+   - logs.zepower.com
+   secretName: kibana-tls
+ rules:
+ - host: logs.zepower.com
+   http:
+    paths:
+    - path: /*
+      backend:
+       serviceName: kibana
+       servicePort: 5601
